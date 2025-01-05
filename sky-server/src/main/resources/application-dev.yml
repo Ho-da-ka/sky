@@ -6,3 +6,7 @@ sky:
     database: sky_take_out
     username: root
     password: 284100
+  alioss:
+    endpoint: https://oss-cn-beijing.aliyuncs.com
+    bucketName: hodaka-java-ai
+    region: cn-beijing
