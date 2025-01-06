@@ -121,6 +121,7 @@ public class DishServiceImpl implements DishService {
             dishFlavorMapper.insert(flavors);
         }
     }
+
     /**
      * 菜品起售停售
      *
@@ -134,5 +135,16 @@ public class DishServiceImpl implements DishService {
                 .status(status)
                 .build();
         dishMapper.update(dish);
+    }
+
+    /**
+     * 根据分类id查询菜品
+     *
+     * @param categoryId
+     * @return
+     */
+    @Override
+    public List<Dish> getByCategoryId(String categoryId) {
+        return dishMapper.getByCategoryId(categoryId);
     }
 }
