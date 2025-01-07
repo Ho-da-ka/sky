@@ -31,6 +31,7 @@ public interface DishService {
      * @return
      */
     void delete(Long[] ids);
+
     /**
      * 根据id查询菜品和对应的口味信息
      *
@@ -38,12 +39,14 @@ public interface DishService {
      * @return
      */
     DishVO getByIdWithFlavor(Long id);
+
     /**
      * 修改菜品
      *
      * @param dishDTO
      */
     void update(DishDTO dishDTO);
+
     /**
      * 菜品起售停售
      *
@@ -51,6 +54,7 @@ public interface DishService {
      * @param id
      */
     void startOrStop(Integer status, Long id);
+
     /**
      * 根据分类id查询菜品
      *
@@ -58,4 +62,12 @@ public interface DishService {
      * @return
      */
     List<Dish> getByCategoryId(String categoryId);
+
+    /**
+     * 条件查询菜品和口味
+     *
+     * @param dish
+     * @return
+     */
+    List<DishVO> listWithFlavor(Dish dish);
 }
