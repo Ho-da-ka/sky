@@ -10,3 +10,8 @@ sky:
     endpoint: https://oss-cn-beijing.aliyuncs.com
     bucketName: hodaka-java-ai
     region: cn-beijing
+  redis:
+    host: localhost
+    port: 6379
+    password: '284100'
+    database: 10
