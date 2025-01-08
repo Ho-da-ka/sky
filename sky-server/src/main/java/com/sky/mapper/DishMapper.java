@@ -60,6 +60,7 @@ public interface DishMapper {
      */
     @AutoFill(value = OperationType.UPDATE)
     void update(Dish dish);
+
     /**
      * 根据分类id查询菜品
      *
@@ -69,5 +70,8 @@ public interface DishMapper {
     @Select("select * from dish where category_id = #{categoryId}")
     List<Dish> getByCategoryId(String categoryId);
 
-
+    /**
+     * 条件查询菜品
+     */
+    List<Dish> list(Dish dish);
 }
