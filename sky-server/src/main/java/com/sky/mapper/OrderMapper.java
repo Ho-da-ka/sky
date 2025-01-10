@@ -1,8 +1,11 @@
 package com.sky.mapper;
 
+import com.github.pagehelper.Page;
 import com.sky.entity.Orders;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 @Mapper
 public interface OrderMapper {
@@ -27,4 +30,19 @@ public interface OrderMapper {
      * @param orders
      */
     void update(Orders orders);
+
+    /**
+     * 条件查询订单
+     *
+     * @param orders
+     * @return
+     */
+    List<Orders> list(Orders orders);
+    /**
+     * 分页查询订单
+     *
+     * @param orders
+     * @return
+     */
+    Page<Orders> page(Orders orders);
 }

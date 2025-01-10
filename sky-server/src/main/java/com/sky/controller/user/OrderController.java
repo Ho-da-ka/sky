@@ -1,14 +1,14 @@
 package com.sky.controller.user;
 
-import com.sky.dto.OrdersDTO;
+import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.dto.OrdersPaymentDTO;
 import com.sky.dto.OrdersSubmitDTO;
-import com.sky.entity.Orders;
-import com.sky.mapper.OrderDetailMapper;
+import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.OrderService;
 import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderSubmitVO;
+import com.sky.vo.OrderVO;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +52,49 @@ public class OrderController {
         // 业务处理，修改订单状态、来单提醒
         orderService.paySuccess(outTradeNo);
         return Result.success(orderPaymentVO);
+    }
+
+    /**
+     * 历史订单查询
+     */
+    @GetMapping("/historyOrders")
+    @ApiOperation("历史订单查询")
+    public Result<PageResult> historyOrders(OrdersPageQueryDTO ordersPageQueryDTO) {
+        log.info("历史订单查询：{}", ordersPageQueryDTO);
+        PageResult pageResult = orderService.historyOrders(ordersPageQueryDTO);
+        return Result.success(pageResult);
+    }
+
+    /**
+     * 订单详情查询
+     */
+    @GetMapping("/orderDetail/{id}")
+    @ApiOperation("订单详情查询")
+    public Result<OrderVO> orderDetail(@PathVariable Long id) {
+        log.info("订单详情查询：{}", id);
+        OrderVO orderVO = orderService.getById(id);
+        return Result.success(orderVO);
+    }
+
+    /**
+     * 取消订单
+     */
+    @PutMapping("/cancel/{id}")
+    @ApiOperation("取消订单")
+    public Result cancel(@PathVariable Long id) {
+        log.info("取消订单：{}", id);
+        orderService.cancel(id);
+        return Result.success();
+    }
+
+    /**
+     * 再来一单
+     */
+    @PostMapping("/repetition/{id}")
+    @ApiOperation("再来一单")
+    public Result repetition(@PathVariable Long id) {
+        log.info("再来一单：{}", id);
+        orderService.repetition(id);
+        return Result.success();
     }
 }
