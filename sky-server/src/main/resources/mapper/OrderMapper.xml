@@ -44,26 +44,7 @@
         </set>
         where id = #{id}
     </update>
-    <select id="list" resultType="com.sky.entity.Orders">
-        select * from orders
-        <where>
-            <if test="number != null and number != ''">
-                and number = #{number}
-            </if>
-            <if test="phone != null and phone != ''">
-                and phone = #{phone}
-            </if>
-            <if test="status != null">
-                and status = #{status}
-            </if>
-            <if test="userId != null">
-                and user_id = #{userId}
-            </if>
-            <if test="id !=null">
-                and id = #{id}
-            </if>
-        </where>
-    </select>
+
     <select id="page" resultType="com.sky.entity.Orders">
         select * from orders
         <where>
@@ -73,8 +54,37 @@
             <if test="userId != null">
                 and user_id = #{userId}
             </if>
+            <if test="phone != null and phone != ''">
+                and phone like concat('%',#{phone},'%')
+            </if>
+            <if test="number != null and number != ''">
+                and number like concat('%',#{number},'%')
+            </if>
+            <if test="beginTime != null and endTime != null">
+                and order_time between #{beginTime} and #{endTime}
+            </if>
         </where>
         order by order_time desc
+    </select>
+    <select id="list" resultType="com.sky.entity.Orders">
+        select * from orders
+        <where>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone like concat('%',#{phone},'%')
+            </if>
+            <if test="number != null and number != ''">
+                and number like concat('%',#{number},'%')
+            </if>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+        </where>
     </select>
 
 </mapper>
