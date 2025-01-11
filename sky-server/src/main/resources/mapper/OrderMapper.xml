@@ -87,4 +87,14 @@
         </where>
     </select>
 
+    <select id="getAmountByDate" resultType="java.util.Map">
+        SELECT DATE(order_time) AS date,
+               SUM(amount)      AS sum
+        FROM orders
+        WHERE status = 5
+          and DATE(order_time) between #{begin} and #{end}
+        GROUP BY DATE(order_time)
+        ORDER BY date;
+    </select>
+
 </mapper>
