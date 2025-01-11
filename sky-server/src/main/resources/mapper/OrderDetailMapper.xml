@@ -10,4 +10,17 @@
             (#{orderDetail.name},#{orderDetail.orderId},#{orderDetail.dishId},#{orderDetail.setmealId},#{orderDetail.dishFlavor},#{orderDetail.number},#{orderDetail.amount},#{orderDetail.image})
         </foreach>
     </insert>
+    <select id="countByDate" resultType="java.util.Map">
+        SELECT name,
+               SUM(number) AS sum
+        FROM order_detail
+        WHERE order_id IN
+              (select id
+               from orders
+               where (date(order_time) between #{begin} and #{end})
+                 and status = 5)
+        GROUP BY name
+        ORDER BY sum DESC
+        limit 0,10;
+    </select>
 </mapper>

@@ -70,4 +70,13 @@ public interface OrderMapper {
      */
     @MapKey("date")
     List<Map<String, String>> getAmountByDate(LocalDate begin, LocalDate end);
+
+    /**
+     * 根据状态统计订单数量
+     * @param end
+     * @param begin
+     * @param status
+     * @return
+     */
+    Integer countByMap(LocalDateTime begin, LocalDateTime end, Integer status);
 }
