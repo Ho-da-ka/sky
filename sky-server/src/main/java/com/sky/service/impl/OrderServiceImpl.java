@@ -18,6 +18,7 @@ import com.sky.service.AddressBookService;
 import com.sky.service.OrderService;
 import com.sky.utils.WeChatPayUtil;
 import com.sky.vo.OrderPaymentVO;
+import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
 import com.sky.websocket.WebSocketServer;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -141,6 +143,21 @@ public class OrderServiceImpl implements OrderService {
 
         return vo;
     }
+
+    /**
+     * 订单统计
+     *
+     * @return
+     */
+    @Override
+    public OrderStatisticsVO statistics() {
+        OrderStatisticsVO orderStatisticsVO = new OrderStatisticsVO();
+        orderStatisticsVO.setToBeConfirmed(orderMapper.countByMap(LocalDateTime.now().with(LocalTime.MIN), null, Orders.TO_BE_CONFIRMED));
+        orderStatisticsVO.setConfirmed(orderMapper.countByMap(LocalDateTime.now().with(LocalTime.MIN), null, Orders.CONFIRMED));
+        orderStatisticsVO.setDeliveryInProgress(orderMapper.countByMap(LocalDateTime.now().with(LocalTime.MIN), null, Orders.DELIVERY_IN_PROGRESS));
+        return orderStatisticsVO;
+    }
+
     /**
      * 用户催单
      *

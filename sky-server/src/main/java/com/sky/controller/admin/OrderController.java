@@ -6,6 +6,7 @@ import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.OrderService;
 import com.sky.vo.OrderPaymentVO;
+import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
 import io.swagger.annotations.ApiOperation;
@@ -31,6 +32,7 @@ public class OrderController {
         PageResult pageResult = orderService.conditionSearch(ordersPageQueryDTO);
         return Result.success(pageResult);
     }
+
     /**
      * 订单详情查询
      */
@@ -41,6 +43,7 @@ public class OrderController {
         OrderVO orderVO = orderService.getById(id);
         return Result.success(orderVO);
     }
+
     /**
      * 接单
      */
@@ -51,6 +54,7 @@ public class OrderController {
         orderService.confirm(ordersDTO);
         return Result.success();
     }
+
     /**
      * 拒单
      */
@@ -61,6 +65,7 @@ public class OrderController {
         orderService.rejection(ordersRejectionDTO);
         return Result.success();
     }
+
     /**
      * 取消订单
      */
@@ -71,6 +76,7 @@ public class OrderController {
         orderService.adminCancel(OrdersCancelDTO);
         return Result.success();
     }
+
     /**
      * 派送订单
      */
@@ -81,6 +87,7 @@ public class OrderController {
         orderService.delivery(id);
         return Result.success();
     }
+
     /**
      * 完成订单
      */
@@ -90,5 +97,15 @@ public class OrderController {
         log.info("完成订单:{}", id);
         orderService.complete(id);
         return Result.success();
+    }
+    /**
+     * 各个状态的订单数量统计
+     */
+    @GetMapping("/statistics")
+    @ApiOperation("各个状态的订单数量统计")
+    public Result<OrderStatisticsVO> statistics() {
+        log.info("各个状态的订单数量统计");
+        OrderStatisticsVO orderStatisticsVO = orderService.statistics();
+        return Result.success(orderStatisticsVO);
     }
 }
