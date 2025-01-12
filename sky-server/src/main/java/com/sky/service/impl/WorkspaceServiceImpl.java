@@ -57,8 +57,10 @@ public class WorkspaceServiceImpl implements WorkspaceService {
         List<Map<String, String>> result = orderMapper.getAmountByDate(begin.toLocalDate(), end.toLocalDate());
         double turnover = 0.0;
         if (result != null && !result.isEmpty()) {
-            String sum = String.valueOf(result.get(0).get("sum"));
-            turnover = sum == null ? 0.0 : Double.parseDouble(sum);
+            for (Map<String, String> map : result) {
+                String sum = String.valueOf(map.get("sum"));
+                turnover += sum == null ? 0 : Double.parseDouble(sum);
+            }
         }
         //有效订单数
         Integer validOrderCount = orderMapper.countByMap(begin, end, 5);
